@@ -12,25 +12,25 @@ services:
     container_name: auth_cont
     build: ./auth
     ports:
-      - "5001:80"
+      - "5001:5001"
       
   book:
     container_name: book_cont
     build: ./book
     ports:
-      - "5002:80"
+      - "5002:5002"
       
   borrow:
     container_name: borrow_cont
     build: ./borrow
     ports:
-      - "5003:80"
+      - "5003:5003"
       
   app:
     container_name: frontend_cont
     build: .
     ports:
-      - "5000:80"
+      - "5000:5000"
 
 volumes:
   db_volumes:
