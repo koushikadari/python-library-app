@@ -1,33 +1,39 @@
-version: "3"
+version: "3.8"
+
 services:
-  auth_service:
-    container_name: auth_cont
-    build: ./auth
-    ports:
-      - "5001:5001"
-
-  book_service:
-    container_name: book_cont
-    build: ./book
-    ports:
-      - "5002:5002"
-
-  borrow_service:
-    container_name: borrow_cont
-    build: ./borrow
-    ports:
-      - "5003:5003"
-
   database:
-    container_name: db_cont
     build: ./database
     ports:
       - "3306:3306"
     volumes:
       - db_volumes:/var/lib/mysql
+    restart: always
+
+  auth_service:
+    build: ./auth
+    ports:
+      - "5001:5001"
+    depends_on:
+      - database
+    restart: always
+
+  book_service:
+    build: ./book
+    ports:
+      - "5002:5002"
+    depends_on:
+      - database
+    restart: always
+
+  borrow_service:
+    build: ./borrow
+    ports:
+      - "5003:5003"
+    depends_on:
+      - database
+    restart: always
 
   app:
-    container_name: frontend_cont
     build: .
     ports:
       - "5000:5000"
@@ -35,6 +41,7 @@ services:
       - auth_service
       - book_service
       - borrow_service
+    restart: always
 
 volumes:
   db_volumes:
