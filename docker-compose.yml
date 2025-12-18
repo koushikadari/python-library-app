@@ -1,34 +1,37 @@
----
 version: "3"
 services:
   database:
     container_name: db_cont
     build: ./database
     ports:
-      -  "3306:3306"
+      - "3306:3306"
     volumes:
-      -  db_volumes: /var/lib/mysql/
+      - db_volumes:/var/lib/mysql
   
   auth:
     container_name: auth_cont
     build: ./auth
     ports:
-      -  "5001:80"
+      - "5001:80"
+      
   book:
     container_name: book_cont
     build: ./book
     ports:
-      -  "5002:80"
+      - "5002:80"
+      
   borrow:
     container_name: borrow_cont
     build: ./borrow
     ports:
-      -  "5003:80"
+      - "5003:80"
+      
   app:
     container_name: frontend_cont
     build: .
     ports:
-      -  "5000:80"
+      - "5000:80"
 
 volumes:
   db_volumes:
+
