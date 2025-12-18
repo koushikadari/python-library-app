@@ -1,0 +1,21 @@
+---
+version: "3"
+services:
+  database:
+    container_name: db_cont
+    build: ./database
+    ports:
+      -  "3306:3306"
+    volumes:
+      -  db_volumes: //var/lib/mysql/
+  
+  auth:
+    container_name: auth_cont
+    build: ./auth
+    ports:
+      -  "1234:80"
+  book:
+    container_name: book_cont
+    build: ./book
+    ports:
+      -  ""
