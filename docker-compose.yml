@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   database:
+    container_name: database
     build: ./database
-    container_name: db_cont
     ports:
       - "3306:3306"
     environment:
@@ -19,8 +19,8 @@ services:
       start_period: 20s
 
   auth_service:
+    container_name: auth_service
     build: ./auth
-    container_name: auth_cont
     ports:
       - "5001:5001"
     depends_on:
@@ -34,8 +34,8 @@ services:
     restart: always
 
   book_service:
+    container_name: book_service
     build: ./book
-    container_name: book_cont
     ports:
       - "5002:5002"
     depends_on:
@@ -49,8 +49,8 @@ services:
     restart: always
 
   borrow_service:
+    container_name: borrow_service
     build: ./borrow
-    container_name: borrow_cont
     ports:
       - "5003:5003"
     depends_on:
@@ -64,8 +64,8 @@ services:
     restart: always
 
   app:
+    container_name: app
     build: .
-    container_name: frontend_cont
     ports:
       - "5000:5000"
     depends_on:
