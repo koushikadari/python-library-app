@@ -11,12 +11,6 @@ services:
       MYSQL_DATABASE: library
     volumes:
       - db_volumes:/var/lib/mysql
-    restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
-      start_period: 20s
 
   auth_service:
     container_name: auth_service
@@ -24,14 +18,7 @@ services:
     ports:
       - "5001:5001"
     depends_on:
-      database:
-        condition: service_healthy
-    environment:
-      DB_HOST: database
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: library
-    restart: always
+      - database
 
   book_service:
     container_name: book_service
@@ -39,14 +26,7 @@ services:
     ports:
       - "5002:5002"
     depends_on:
-      database:
-        condition: service_healthy
-    environment:
-      DB_HOST: database
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: library
-    restart: always
+      - database
 
   borrow_service:
     container_name: borrow_service
@@ -54,14 +34,7 @@ services:
     ports:
       - "5003:5003"
     depends_on:
-      database:
-        condition: service_healthy
-    environment:
-      DB_HOST: database
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: library
-    restart: always
+      - database
 
   app:
     container_name: app
@@ -72,11 +45,8 @@ services:
       - auth_service
       - book_service
       - borrow_service
-    environment:
-      AUTH_URL: http://auth_service:5001
-      BOOK_URL: http://book_service:5002
-      BORROW_URL: http://borrow_service:5003
-    restart: always
+      - database
 
 volumes:
   db_volumes:
+
